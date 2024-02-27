@@ -126,11 +126,11 @@ main :: proc() {
     rgba: [4]u8 = { 1, 1, 1, 1 }
 
     // Dropped Files
-    dropped: bool = false
     newImagePath: cstring
     
-        
+    
     for !rl.WindowShouldClose() {
+        dropped: bool = false
         mouseOverMethod: bool
         mouseOverChannel: bool
 
