@@ -54,6 +54,18 @@ getTextureFootprint :: proc(textureDimensions: [2]i32, bits: i32) -> f32 {
     return textureKB
 }
 
+paintTextureChannels :: proc(renderTexture: rl.RenderTexture2D, imageColors: [^]rl.Color, r, g, b, a: u8, height, width: i32) {
+    rl.BeginTextureMode(renderTexture)
+        for x in 0..=(width - 1) {
+            for y in 0..=(height - 1) {
+                index: i32 = x + (y * height)
+                pxlColor: rl.Color = { r * imageColors[index].r, g * imageColors[index].g, b * imageColors[index].b, a * imageColors[index].a }
+                rl.DrawPixelV({ f32(x), f32(height - y) }, pxlColor)
+            }
+        }
+    rl.EndTextureMode()
+}
+
 calculateTextPosition :: proc(text: cstring, font: i32, rec: rl.Rectangle) -> (i32, i32) {
     textLength: i32 = rl.MeasureText(text, font)
     posX: i32 = i32(rec.x) + ((i32(rec.width) - textLength) / 2)
